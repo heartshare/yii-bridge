@@ -32,8 +32,9 @@
         }
         $urls=explode("?",$_SERVER['REQUEST_URI']);
         $urls[0]=trim($urls[0],"/");
-        $result=str_replace("$app/index.php?r=",$urls[0]."?r=",$result);
+        $result=str_replace("/index.php?r=",$urls[0]."?r=",$result);
         $result=str_replace("index.php/?r=",$urls[0]."?r=",$result);
+	$result=str_replace("index.php/",$urls[0]."/?r=",$result);
         return $result;
     }
 
