@@ -2,8 +2,9 @@
     /*
     Plugin Name:Yii bridge
     Description: connect Yii www.yiiframework.com as a MVC framework for Wordpress
-    Author: chensihai@gmail.com
+    Author: chensihai
     Version: 0.4
+    Author URI: http://wp.69digtal.com/
     */
 
     function yii_bridge_func($atts){
