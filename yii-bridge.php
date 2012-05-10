@@ -4,7 +4,7 @@
     Description: connect Yii www.yiiframework.com as a MVC framework for Wordpress
     Author: chensihai
     Version: 0.4
-    Author URI: http://wp.69digtal.com/
+    Author URI: http://wp.69digital.com/
     */
 
     function yii_bridge_func($atts){
