@@ -3,7 +3,7 @@
     Plugin Name:Yii bridge
     Description: connect Yii www.yiiframework.com as a MVC framework for Wordpress
     Author: chensihai
-    Version: 0.5
+    Version: 0.4
     */
 
     function yii_bridge_func($atts){
@@ -14,7 +14,7 @@
 
         $file=ABSPATH."yii/".$app_path."/index.php";
         $file0=$_SERVER['SCRIPT_FILENAME']=$file;
-        $_SERVER['SCRIPT_FILENAME']=$file;
+       // $_SERVER['SCRIPT_FILENAME']=$file;
         $self0=$_SERVER['PHP_SELF'];
         $_SERVER['PHP_SELF']=$_SERVER['SCRIPT_NAME']="index.php";
         $path0=getcwd();
@@ -27,8 +27,12 @@
         $_SERVER['PHP_SELF']=$_SERVER['SCRIPT_NAME']=$self0;
         $_SERVER['SCRIPT_FILENAME']=$file0;
         if(strpos($result,"<body")>0){
+            preg_match('/(?:<head[^>]*>)(.*)<\/head>/isU', $result, $matches);
+            $_SESSION['header'] = $matches[1];
+            
             preg_match('/(?:<body[^>]*>)(.*)<\/body>/isU', $result, $matches);
             $result = $matches[1];
+            
         }
         $urls=explode("?",$_SERVER['REQUEST_URI']);
         $urls[0]=trim($urls[0],"/");
@@ -36,6 +40,7 @@
         $result=str_replace("index.php/?r=",$urls[0]."?r=",$result);
         $result=str_replace("index.php?r=",$urls[0]."?r=",$result);
         $result=str_replace("index.php/",$urls[0]."/?r=",$result);
+        $result=str_replace("yii-bridge-demohangman/?r=game","?r=game",$result);
         return $result;
     }
 
@@ -77,6 +82,13 @@
     }
 
     function header_func(){
+        if(strpos($_SERVER["REQUEST_URI"],"demohangman")>0)
+        {?> 
+<script type="text/javascript" src="/yii/demos/hangman/assets/658bb7a/jquery.min.js"></script>
+<script type="text/javascript" src="/yii/demos/hangman/assets/658bb7a/jquery.yii.js"></script>
+        <?php
+            return;
+        }
         global $posts;
         $shortcode_found=false;
         foreach($posts as $post){
@@ -92,6 +104,8 @@
             }
         } 
         if(!$shortcode_found) return;
+        
+        //echo $_SESSION['header'];
     ?>
     <!-- blueprint CSS framework -->
     <link rel="stylesheet" type="text/css" href="/yii/<?php echo $app_path ?>/css/screen.css" media="screen, projection" />
